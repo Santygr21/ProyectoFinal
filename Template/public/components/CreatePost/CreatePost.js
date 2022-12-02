@@ -1,0 +1,87 @@
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+import { addPost } from "../../services/firebase.js";
+export class CreatePost extends HTMLElement {
+    constructor() {
+        super();
+        this.username = "";
+        this.image = "";
+        this.comment = "";
+        this.attachShadow({ mode: "open" });
+    }
+    connectedCallback() {
+        var _a, _b, _c, _d;
+        this.render();
+        const btn = (_a = this.shadowRoot) === null || _a === void 0 ? void 0 : _a.querySelector("button");
+        btn === null || btn === void 0 ? void 0 : btn.addEventListener("click", () => __awaiter(this, void 0, void 0, function* () {
+            if (this.username && this.image && this.comment) {
+                const postData = {
+                    username: this.username,
+                    image: this.image,
+                    comment: this.comment
+                };
+                try {
+                    yield addPost(postData);
+                    alert("Publicación subida");
+                    const event = new CustomEvent("form-full", { composed: true });
+                    this.dispatchEvent(event);
+                }
+                catch (e) {
+                    console.log(e);
+                    alert("Ha ocurrido un error creando el post");
+                }
+            }
+            else {
+                alert("Se requiere llenar todos los campos");
+            }
+        }));
+        const userInput = (_b = this.shadowRoot) === null || _b === void 0 ? void 0 : _b.querySelector("#username");
+        const imageInput = (_c = this.shadowRoot) === null || _c === void 0 ? void 0 : _c.querySelector("#image");
+        const commentInput = (_d = this.shadowRoot) === null || _d === void 0 ? void 0 : _d.querySelector("#comment");
+        userInput === null || userInput === void 0 ? void 0 : userInput.addEventListener("change", (evt) => {
+            const value = evt.target.value || "";
+            this.username = value;
+        });
+        imageInput === null || imageInput === void 0 ? void 0 : imageInput.addEventListener("change", (evt) => {
+            const value = evt.target.value || "";
+            this.image = value;
+        });
+        commentInput === null || commentInput === void 0 ? void 0 : commentInput.addEventListener("change", (evt) => {
+            const value = evt.target.value || "";
+            this.comment = value;
+        });
+    }
+    render() {
+        if (!this.shadowRoot)
+            return;
+        this.shadowRoot.innerHTML = `
+        <div class="form-container">
+         <article>
+         <link rel="stylesheet" href=" ./components/Form/style.css">
+             <div class="input">
+                 <input class="input__field" type="text" placeholder="Username" id="username"/>
+             </div>
+            
+             <div class="input">
+                 <input class="input__field" type="text" placeholder="Image" id="image"/>
+             </div>
+ 
+             <div class="input">
+                 <input class="input__field" type="text" placeholder="Comment" id="comment"/>
+             </div>
+             
+             <button type="submit">Create post</button>
+             
+         </article>
+         </div>
+         `;
+    }
+}
+customElements.define("app-create", CreatePost);
