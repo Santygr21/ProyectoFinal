@@ -1,0 +1,53 @@
+section{
+    width: 20%;
+    height: 97vh;
+    padding: 10px 0 10px 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+section .End{
+    display: flex;
+    justify-content: flex-end;
+}
+
+section .Logo{
+    width: 140px;
+    margin-bottom: 40px;
+}
+
+section .IconText{
+    display: flex;
+    flex-direction: row;
+}
+ 
+section .IconText img{
+    width: 20px;
+    height: 20px;
+    margin: 12px;
+}
+
+.buttonSubmit{
+    border: 0; 
+    margin: 0; 
+    padding: 0; 
+    display: flex
+}
+
+.IconText .ProfilePic{
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+}
+
+section .IconText h3{
+    margin: 12px;
+    font-size: 16px;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 300;
+}
+
+.navContainer {
+    position: fixed;
+}

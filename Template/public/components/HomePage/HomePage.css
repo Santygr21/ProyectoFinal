@@ -1,0 +1,12 @@
+*{
+    display: flex;
+    flex-direction: row;
+}
+
+.stories-container{
+    width: 42vh;
+}
+
+.container{
+    margin-left: -2rem;
+}
